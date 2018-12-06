@@ -1,0 +1,56 @@
+<!doctype html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<label >Message:</label>
+<input type="text" name="" id="input">
+<button id="button">SUBMIT MESSAGE</button>
+<hr>
+<form action="/populateForm" method="GET">
+    <label>Id:</label><input type="text" th:value="${id}">
+    <label>Name:</label><input type="text" th:value="${name}">
+    <label>Age:</label><input type="text" th:value="${age}">
+    <input type="submit" value="Click me">
+</form>
+<hr>
+<form action="/populateForm2" method="GET">
+    <label>Id:</label><input type="text" th:value="${id2}">
+    <label>Name:</label><input type="text" th:value="${name2}">
+    <label>Age:</label><input type="text" th:value="${age2}">
+    <input type="submit" value="CLICK ME">
+</form>
+<hr>
+<hr>
+<form action="/postData" method="POST">
+    <label>Id:</label><input type="text" name = "id">
+    <label>Name:</label><input type="text" name = "name">
+    <label>Age:</label><input type="text" name = "age" >
+    <input type="submit" value="CLICK ME">
+</form>
+</body>
+<script>
+    var button = document.getElementById('button');
+    button.addEventListener('click',function() {
+        var input = document.getElementById('input');
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST','/sendMessageJSON',true);
+        xhr.setRequestHeader('Content-Type','application/json');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                console.log("Status OK");
+            }
+        }
+        console.log(xhr.status);
+        var messageObj = {};
+        messageObj.id = 1;
+        messageObj.message = input.value;
+        xhr.send(JSON.stringify(messageObj));
+    })
+</script>
+</html>
