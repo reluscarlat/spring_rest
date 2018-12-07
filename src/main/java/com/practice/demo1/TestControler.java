@@ -10,6 +10,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.StringReader;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500", allowedHeaders = "*")
 @Controller // Annotare pentru returnare de HTML si JSP, nu si JSON.
 public class TestControler {
 
@@ -80,6 +81,20 @@ public class TestControler {
         model.addAttribute("id2",id2);
         model.addAttribute("age2",age);
         return "file1";
+    }
+
+    @ResponseBody
+    @PostMapping("/postJsonString")
+    public void receiveJsonString(@RequestBody String data) {
+        JsonReader jsonReader = Json.createReader(new StringReader(data ));
+        JsonObject object = jsonReader.readObject();
+        System.out.println(object.getString("name") + " - " + object.getInt("age") );
+    }
+
+    @ResponseBody
+    @PostMapping("/postObject")
+    public void receiveObject(@RequestBody Person person) {
+        System.out.println(person.toString());
     }
 
 }
